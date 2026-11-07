@@ -172,3 +172,4 @@ while True:
     if again != "да":
         print("\n👋 Спасибо за использование программы! До свидания!")
         break
+#Made by https://github.com/Serega210810
