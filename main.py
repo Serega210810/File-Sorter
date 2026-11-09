@@ -28,7 +28,7 @@ while True:
     folder_path = input("Введите путь к папке для сортировки: ").strip()
 
     # Проверка на пустой ввод
-    if not folder_path:
+    if folder_path.strip() == "": #заменил на более читабельный вариант
         print("❌ Путь не может быть пустым! Попробуйте снова.")
         continue  
 
@@ -45,24 +45,29 @@ while True:
         continue
 
     # --- Подсчёт файлов в папке ---
-    files_count = sum(1 for item in folder.iterdir() if item.is_file())
+    files_count = 0
+    for item in folder.iterdir(): #заменил на более читабельный вариант с помощью цикла for
+        if item.is_file():
+            files_count += 1
     print(f"\n📁 Найдено файлов: {files_count}")
 
     if files_count == 0:
         print("⚠ В папке нет файлов для сортировки.")
-        again = input("\n🔄 Хотите попробовать другую папку? (да/нет): ").strip().lower()
-        if again != "да":
+        again_question = input("\n🔄 Хотите попробовать другую папку? (да/нет): ").strip().lower() 
+        if again_question != "да": #чуть заменил название переменной для лучшего понимания кода
             print("\n👋 Спасибо за использование программы!")
             break
         continue  
 
     # === ВЫБОР КАТЕГОРИЙ ДЛЯ СОРТИРОВКИ ===
     print("\n📋 Доступные категории:")
-    categories_list = list(CATEGORIES.keys()) + ["Other"]
-    for i, category in enumerate(categories_list, 1):
-        print(f"   {i}. {category}")
-
-    print(f"   {len(categories_list) + 1}. Все категории")
+    categories_list = []
+    for item in CATEGORIES.keys():
+        print(f"   {item}")
+        categories_list.append(item)
+    for i in range(1, len(categories_list) + 1): 
+        print(f"   {i}. {categories_list[i - 1]}") 
+    print(f"   {len(categories_list) + 1}. Все категории") #Сделал более понятный цикл с использованием range
 
     # --- Ввод выбора ---
     choice = input("\nВыберите категории для сортировки (через запятую, например: 1,3,5): ").strip()
